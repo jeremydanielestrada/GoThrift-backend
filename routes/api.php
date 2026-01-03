@@ -14,6 +14,6 @@ Route::get('/register', [AuthController::class, 'register']);
 Route::middleware('auth:sanctum')->group(function () {
 
 
-
+//User logout
 Route::get('/logout', [AuthController::class, 'logout']);
 });
