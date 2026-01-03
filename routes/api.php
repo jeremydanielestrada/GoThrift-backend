@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ProductController;
 
 
 
@@ -12,8 +13,10 @@ Route::get('/register', [AuthController::class, 'register']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
+    //Product Routes
+    Route::apiResource('products',ProductController::class);
 
 
-//User logout
-Route::get('/logout', [AuthController::class, 'logout']);
+    //User logout
+    Route::get('/logout', [AuthController::class, 'logout']);
 });

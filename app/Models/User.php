@@ -25,9 +25,16 @@ class User extends Authenticatable
         'password',
     ];
 
+
+    //Relationships
     public function products(){
 
         return $this->hasMany(Product::class, 'user_id');
+    }
+
+    public function carts(){
+
+        return $this->hasMany(Cart::class, 'user_id');
     }
 
     /**
