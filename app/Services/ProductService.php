@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -23,6 +24,10 @@ class ProductService{
 
     public function createProduct(array $fields){
 
+        if(isset($fields['image']) && $fields['image']){
+            $fields['image'] = Storage::put('products', $fields['image']);
+        }
+
         $product = Product::create($fields);
 
 
@@ -35,8 +40,15 @@ class ProductService{
 
 
     public function updateProduct(array $fields, string $id){
-
         $product = Product::findOrFail($id);
+
+
+        if(isset($fields['image']) && $fields['image']){
+
+            if($product->image) Storage::delete($product->image);
+
+             $fields['image'] = Storage::put('products', $fields['image']);
+        }
 
         $product = Product::update($fields);
 
