@@ -18,11 +18,34 @@ class CartController extends Controller
 
     }
 
-    public function destroy(string $id){
 
-        $this->cartService->deleteCurrentUserCart($id);
+    public function add(Request $request){
 
-        return response()->json(null, 204);
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity'   => 'sometimes|integer|min:1',
+        ]);
+
+        $cart = $this->cartService->addToCart($request->product_id, $request->quantity ?? 1);
+
+        return response()->json($cart, 201);
+    }
+
+    public function update(Request $request){
+        $request->validate([
+             'cart_id'    => 'required|exists:cart,id',
+             'quantity'   => 'sometimes|integer|min:1',
+        ]);
+
+        $this->cartService->updateQuantity($request->cart_id, $request->quantity ?? 1);
+
+    }
+
+    public function remove($id){
+
+        $this->cartService->removeItem($id);
+
+        return response()->noContent();
     }
 
 }

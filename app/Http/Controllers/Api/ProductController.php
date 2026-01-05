@@ -31,16 +31,16 @@ class ProductController extends Controller
     }
 
 
-    public function update(ProductRequest $request, string $id){
+    public function update(ProductRequest $request, $id){
 
         $validated = $request->validated();
 
         return response()->json($this->productService->updateProduct($validated, $id), 201);
     }
 
-    public function destroy(string $id){
+    public function destroy($id){
         $this->productService->deleteProduct($id);
 
-        return response()->json(null, 204);
+        return response()->noContent();
     }
 }

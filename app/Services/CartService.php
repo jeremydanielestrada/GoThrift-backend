@@ -90,6 +90,11 @@ class CartService{
     }
 
 
+    public function removeItem(int $cartItemId){
+        CartItem::where('id', $cartItemId)->delete();
+    }
+
+
     public function clearCart(){
         $cart = Cart::where('user_id', auth()->id())
             ->where('status', 'active')

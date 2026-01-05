@@ -39,7 +39,7 @@ class ProductService{
 
 
 
-    public function updateProduct(array $fields, string $id){
+    public function updateProduct(array $fields, int $id){
         $product = Product::findOrFail($id);
 
 
@@ -61,7 +61,7 @@ class ProductService{
 
 
 
-    public function deleteProduct(string $id){
+    public function deleteProduct(int $id){
 
         $product = Product::find($id);
 
