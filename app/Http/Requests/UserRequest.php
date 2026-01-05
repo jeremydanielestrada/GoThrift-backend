@@ -21,11 +21,19 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name'           => 'required|string|max:255',
-            'email'          => 'required|email|max:255|unique:users',
-            'password'       => 'required|string|confirmed|min:8',
-            'role'           => 'required|string',
-        ];
+        if(request()->routeIs('user.register')){
+            return [
+                'name'           => 'required|string|max:255',
+                'email'          => 'required|email|max:255|unique:users',
+                'password'       => 'required|string|confirmed|min:8',
+                'role'           => 'required|string',
+            ];
+        }else if(request()->routeIs('user.login')){
+            return [
+                'email'          => 'required|email|max:255',
+                'password'       => 'required|string|min:8',
+            ];
+        }
+        return [];
     }
 }

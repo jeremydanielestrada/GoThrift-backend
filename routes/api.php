@@ -8,8 +8,8 @@ use App\Http\Controllers\Api\CartController;
 
 
 //Authentication Routes
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login'])->name('user.login');
+Route::post('/register', [AuthController::class, 'register'])->name('user.register');
 
 
 
@@ -24,5 +24,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     //User logout
-    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
