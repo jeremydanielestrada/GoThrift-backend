@@ -8,8 +8,8 @@ use App\Http\Controllers\Api\CartController;
 
 
 //Authentication Routes
-Route::get('/login', [AuthController::class, 'login']);
-Route::get('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
 
 
