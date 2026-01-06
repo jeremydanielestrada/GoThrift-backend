@@ -17,6 +17,9 @@ Route::middleware('auth:sanctum')->group(function () {
     //Product Routes
     Route::apiResource('products',ProductController::class);
 
+     // Override the update route to accept POST(Required when using multi-form data/ method spoof the form data when testing to postman)
+    Route::post('/products/{product}', [ProductController::class, 'update'])->name('update');
+
     //Cart Routes
     Route::get('/cart', [CartController::class, 'index']);
     Route::post('/cart/${id}', [CartController::class, 'add']);

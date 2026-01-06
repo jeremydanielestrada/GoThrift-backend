@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Services\ProductService;
+use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -32,11 +34,12 @@ class ProductController extends Controller
     }
 
 
-    public function update(ProductRequest $request, $id){
+    public function update(ProductRequest $request, Product $product ){
+
 
         $validated = $request->validated();
 
-        return response()->json($this->productService->updateProduct($validated, $id), 201);
+        return response()->json($this->productService->updateProduct($validated, $product), 200);
     }
 
     public function destroy($id){

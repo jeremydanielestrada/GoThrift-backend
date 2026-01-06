@@ -6,7 +6,7 @@ namespace App\Services;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
-
+use Illuminate\Support\Facades\Log;
 
 
 class ProductService{
@@ -39,8 +39,7 @@ class ProductService{
 
 
 
-    public function updateProduct(array $fields, int $id){
-        $product = Product::findOrFail($id);
+    public function updateProduct(array $fields, Product $product){
 
 
         if(isset($fields['image']) && $fields['image'] instanceof UploadedFile){
@@ -48,11 +47,12 @@ class ProductService{
             Storage::delete($product->image);
 
             $fields['image'] = $fields['image']->store('products');
-        }else{
-            unset($fields['image']);
         }
 
-        $product = Product::update($fields);
+
+        $product->update($fields);
+        $product->refresh();
+
 
 
         return[
