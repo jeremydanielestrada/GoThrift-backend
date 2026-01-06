@@ -15,12 +15,12 @@ class ProductController extends Controller
 
     public function index(){
 
-      return response()->json($this->productService->getAllProducts());
+        return response()->json($this->productService->getAllProducts());
     }
 
-    public function show(string $id){
+    public function show(Product $product){
 
-     return response()->json($this->productService->getProductById($id));
+         return response()->json($product);
 
     }
 
@@ -42,8 +42,8 @@ class ProductController extends Controller
         return response()->json($this->productService->updateProduct($validated, $product), 200);
     }
 
-    public function destroy($id){
-        $this->productService->deleteProduct($id);
+    public function destroy(Product $product){
+        $this->productService->deleteProduct($product);
 
         return response()->noContent();
     }

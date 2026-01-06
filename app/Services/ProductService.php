@@ -6,7 +6,6 @@ namespace App\Services;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Log;
 
 
 class ProductService{
@@ -16,10 +15,6 @@ class ProductService{
         return Product::all();
     }
 
-
-    public function getProductById($id){
-        return Product::find($id);
-    }
 
 
 
@@ -63,10 +58,12 @@ class ProductService{
 
 
 
-    public function deleteProduct(int $id){
+    public function deleteProduct(Product $product){
 
-        $product = Product::find($id);
-
+       // checking if image exists
+     if($product->image && Storage::exists($product->image)){
+        Storage::delete($product->image);
+     }
         $product->delete();
     }
 
