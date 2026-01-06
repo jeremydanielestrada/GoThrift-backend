@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
 
 
@@ -24,12 +25,11 @@ class ProductService{
 
     public function createProduct(array $fields){
 
-        if(isset($fields['image']) && $fields['image']){
-            $fields['image'] = Storage::put('products', $fields['image']);
+        if(isset($fields['image']) && $fields['image'] instanceof UploadedFile){
+             $fields['image'] = $fields['image']->store('products');
         }
 
         $product = Product::create($fields);
-
 
         return[
             'message' => 'Product created successfully',
@@ -43,11 +43,13 @@ class ProductService{
         $product = Product::findOrFail($id);
 
 
-        if(isset($fields['image']) && $fields['image']){
+        if(isset($fields['image']) && $fields['image'] instanceof UploadedFile){
 
-            if($product->image) Storage::delete($product->image);
+            Storage::delete($product->image);
 
-             $fields['image'] = Storage::put('products', $fields['image']);
+            $fields['image'] = $fields['image']->store('products');
+        }else{
+            unset($fields['image']);
         }
 
         $product = Product::update($fields);

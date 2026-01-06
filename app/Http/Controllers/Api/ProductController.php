@@ -26,6 +26,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request){
 
         $validated = $request->validated();
+        $validated['user_id'] = auth()->id();
 
         return response()->json($this->productService->createProduct($validated), 201);
     }
