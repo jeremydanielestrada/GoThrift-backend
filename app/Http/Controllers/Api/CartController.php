@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\CartService;
 use Illuminate\Http\Request;
-
+use App\Models\Product;
 class CartController extends Controller
 {
 
@@ -19,21 +19,24 @@ class CartController extends Controller
     }
 
 
-    public function add(Request $request){
+    public function add(Request $request, $product_id){
 
         $request->validate([
-            'product_id' => 'required|exists:products,id',
             'quantity'   => 'sometimes|integer|min:1',
         ]);
 
-        $cart = $this->cartService->addToCart($request->product_id, $request->quantity ?? 1);
+        if(!Product::find($product_id)){
+            return response()->json(['message' => 'Product not found.'], 404);
+        }
+
+        $cart = $this->cartService->addToCart($product_id, $request->quantity ?? 1);
 
         return response()->json($cart, 201);
     }
 
     public function update(Request $request){
         $request->validate([
-             'cart_id'    => 'required|exists:cart,id',
+             'cart_id'    => 'required|exists:carts,id',
              'quantity'   => 'sometimes|integer|min:1',
         ]);
 

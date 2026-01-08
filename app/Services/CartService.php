@@ -66,7 +66,7 @@ class CartService{
 
 [
                 'cart_id'         => $cart->id,
-                'prodcut_id'      => $product->id
+                'product_id'      => $product->id
             ],
 
     [

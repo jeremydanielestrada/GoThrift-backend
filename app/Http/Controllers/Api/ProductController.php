@@ -43,6 +43,7 @@ class ProductController extends Controller
     }
 
     public function destroy(Product $product){
+
         $this->productService->deleteProduct($product);
 
         return response()->noContent();
