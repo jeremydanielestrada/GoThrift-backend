@@ -23,8 +23,12 @@ class Product extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function cartItem(){
+    public function cartItems(){
 
         return $this->hasMany(CartItem::class, 'product_id');
+    }
+
+    public function OrderItems(){
+        return $this->hasMany(OrderItem::class, 'product_id');
     }
 }
